@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/main :: head"></head>
+<body>
+    <nav th:replace="layout/main :: nav"></nav>
+
+    <div >
+        <h2>Place New Order</h2>
+        <form th:action="@{/submit-order}" th:object="${order}" method="post" >
+            <div >
+                <label for="userId" >User ID</label>
+                <input type="text"  id="userId" th:field="*{userId}" required>
+            </div>
+            <div >
+                <label for="stockSymbol" >Stock Symbol</label>
+                <input type="text"  id="stockSymbol" th:field="*{stockSymbol}" required>
+            </div>
+            <div >
+                <label for="quantity" >Quantity</label>
+                <input type="number" id="quantity" th:field="*{quantity}" required min="1">
+            </div>
+            <div class="mb-3">
+                <label for="price" >Price per Share</label>
+                <input type="number"  id="price" th:field="*{price}" required step="0.01" min="0.01">
+            </div>
+            <div class="mb-3">
+                <label for="orderType" >Order Type</label>
+                <select  id="orderType" th:field="*{orderType}" required>
+                    <option value="BUY">Buy</option>
+                    <option value="SELL">Sell</option>
+                </select>
+            </div>
+            <button type="submit" >Place Order</button>
+        </form>
+    </div>
+
+   
+</body>
+</html> 

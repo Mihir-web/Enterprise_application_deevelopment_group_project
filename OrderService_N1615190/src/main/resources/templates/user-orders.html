@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/main :: head"></head>
+<body>
+    <nav th:replace="layout/main :: nav"></nav>
+
+    <div>
+        <h2>Your Orders</h2>
+        <div>
+            <a href="/place-order" >Place New Order</a>
+            <a th:href="@{/orders/{userId}/pending(userId=${userId})}">View Pending Orders</a>
+        </div>
+
+        <div >
+            <table >
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Stock Symbol</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td th:text="${order.id}"></td>
+                        <td th:text="${order.stockSymbol}"></td>
+                        <td th:text="${order.quantity}"></td>
+                        <td th:text="${'$' + #numbers.formatDecimal(order.price, 1, 2)}"></td>
+                        <td th:text="${'$' + #numbers.formatDecimal(order.price * order.quantity, 1, 2)}"></td>
+                        <td>
+                            <span th:class="${order.orderType == 'BUY' ? 'badge bg-success' : 'badge bg-danger'}"
+                                  th:text="${order.orderType}"></span>
+                        </td>
+                        <td>
+                            <span th:class="${order.status == 'COMPLETED' ? 'badge bg-success' : 
+                                           (order.status == 'PENDING' ? 'badge bg-warning' : 'badge bg-danger')}"
+                                  th:text="${order.status}"></span>
+                        </td>
+                        <td th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(orders)}">
+                        <td colspan="8" class="text-center">No orders found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+ 
+</body>
+</html> 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/main :: head"></head>
+<body>
+    <nav th:replace="layout/main :: nav"></nav>
+
+    <div>
+        <div role="alert">
+            <h4>Order Placed Successfully!</h4>
+        </div>
+
+        <div>
+            <div>
+                <h5>Order Details</h5>
+            </div>
+            <div>
+                <p><strong>Order ID:</strong> <span th:text="${order.id}"></span></p>
+                <p><strong>Stock Symbol:</strong> <span th:text="${order.stockSymbol}"></span></p>
+                <p><strong>Quantity:</strong> <span th:text="${order.quantity}"></span></p>
+                <p><strong>Price per Share:</strong> $<span th:text="${#numbers.formatDecimal(order.price, 1, 2)}"></span></p>
+                <p><strong>Total Amount:</strong> $<span th:text="${#numbers.formatDecimal(order.price * order.quantity, 1, 2)}"></span></p>
+                <p><strong>Order Type:</strong> <span th:text="${order.orderType}"></span></p>
+                <p><strong>Status:</strong> <span th:text="${order.status}"></span></p>
+                <p><strong>Order Date:</strong> <span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm:ss')}"></span></p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a href="/place-order">Place Another Order</a>
+            <a th:href="@{/orders/{userId}(userId=${order.userId})}" >View All Orders</a>
+        </div>
+    </div>
+
+    
+</body>
+</html> 
